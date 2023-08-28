@@ -11,12 +11,19 @@ namespace AzureBlobStorage
             "AccountKey=bIddy5e7J0keJrTcGkCiHYKfokkxz7RaelBhFiaLxUQ5R7r7LQnZ3z4/Qh67mPICL8bTeK3S2xnh+AStNdU/QQ==;" +
             "EndpointSuffix=core.windows.net";
         private static string _containerName = "fellyka";
+        private static string _fileName = "SqlBook";
+        private static string _fileToUpload = @"D:\Books\Sql\SQL Server 2014 Development Essentials.pdf";
         static void Main(string[] args)
         {
-            //Create a containner
+            //Get reference to an existing container and blob
             BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
-            blobServiceClient.CreateBlobContainer(_containerName);
-            Console.WriteLine("Container succesfully created!");
+            BlobContainerClient _containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+            BlobClient blobClient = _containerClient.GetBlobClient(_fileName);
+
+            blobClient.Upload(_fileToUpload);
+          
+
+            Console.WriteLine("File succesfully uploaded!");
         }
     }
     
